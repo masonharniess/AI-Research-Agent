@@ -4,6 +4,7 @@ from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import PydanticOutputParser
+from langchain.agents import create_tool_calling_agent, AgentExecutor
 
 load_dotenv() # load .env file to obtain credentials
 
@@ -14,6 +15,11 @@ class ResearchResponse(BaseModel):
   tools_used: list[str]
 
 llmOpenAI = ChatOpenAI(model="gpt-4o-mini")
+
+# llmAnthropic = ChatAnthropic(model="claude-3-5-sonnet-20241022")
+
+# response = llmOpenAI.invoke("What is the meaning of life?")
+# print(response)
 
 parser = PydanticOutputParser(pydantic_object=ResearchResponse)
 
@@ -34,8 +40,12 @@ prompt = ChatPromptTemplate.from_messages(
   ]
 ).partial(format_instructions=parser.get_format_instructions())
 
+agent = create_tool_calling_agent(
+  llm=llmOpenAI,
+  prompt=prompt,
+  tools=[]
+)
 
-# llmAnthropic = ChatAnthropic(model="claude-3-5-sonnet-20241022")
-
-# response = llmOpenAI.invoke("What is the meaning of life?")
-# print(response)
+agent_executor = AgentExecutor(agent=agent, tools=[], verbose=False)
+raw_response = agent_executor.invoke({"query": "What is the capital of France?"})
+print(raw_response)
