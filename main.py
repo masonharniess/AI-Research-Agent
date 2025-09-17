@@ -48,4 +48,11 @@ agent = create_tool_calling_agent(
 
 agent_executor = AgentExecutor(agent=agent, tools=[], verbose=False)
 raw_response = agent_executor.invoke({"query": "What is the capital of France?"})
-print(raw_response)
+
+# print(raw_response)
+
+output = raw_response.get("output")
+
+structured_response = parser.parse(raw_response.get("output"))
+
+print(structured_response)
