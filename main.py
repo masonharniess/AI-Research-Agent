@@ -53,6 +53,10 @@ raw_response = agent_executor.invoke({"query": "What is the capital of France?"}
 
 output = raw_response.get("output")
 
-structured_response = parser.parse(raw_response.get("output"))
+# catch error for model providing an incorrect response type
+try:
+  structured_response = parser.parse(raw_response.get("output"))
+except Exception as e:
+  print("Error parsing response", e, "Raw Response - ", raw_response)
 
 print(structured_response)
