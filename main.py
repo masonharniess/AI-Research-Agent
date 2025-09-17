@@ -58,7 +58,7 @@ output = raw_response.get("output")
 # catch error for model providing an incorrect response type
 try:
   structured_response = parser.parse(raw_response.get("output"))
+  print(structured_response)
 except Exception as e:
   print("Error parsing response", e, "Raw Response - ", raw_response)
 
-print(structured_response)
