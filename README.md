@@ -39,6 +39,7 @@ The agent uses OpenAI's GPT-4o mini model by default. Other OpenAI models, or mo
 
 ## Usage
 1. In your virtual environment, run the program with the following command.
+
     ```Python
     python3 main.py
     ```
@@ -53,10 +54,12 @@ The agent uses OpenAI's GPT-4o mini model by default. Other OpenAI models, or mo
 
 
 2. When asked `What can I help you research?`, enter your desired topic of enquiry and press enter. 
+    
     ```
     What can I help you research? Hammerhead sharks
     ```
 3. To save the LLM's response to a text file, simply add this command onto your enquiry:
+    
     ```
     What can I help you research? Hammerhead sharks, save to file
     ```
