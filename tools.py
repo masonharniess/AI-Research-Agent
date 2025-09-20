@@ -25,5 +25,5 @@ def save_to_text(data: str, filename: str = "research_output.txt"):
 save_tool = Tool(
   name="save_text_to_file",
   func=save_to_text,
-  description="Saves structured research data to a tect file.",
+  description="Saves structured research data to a text file.",
 )
