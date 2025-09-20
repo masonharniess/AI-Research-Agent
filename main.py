@@ -17,10 +17,10 @@ class ResearchResponse(BaseModel):
 
 llmOpenAI = ChatOpenAI(model="gpt-4o-mini")
 
-# llmAnthropic = ChatAnthropic(model="claude-3-5-sonnet-20241022")
-
 # response = llmOpenAI.invoke("What is the meaning of life?")
 # print(response)
+
+llmAnthropic = ChatAnthropic(model="claude-3-5-sonnet-20241022")
 
 parser = PydanticOutputParser(pydantic_object=ResearchResponse)
 
@@ -43,12 +43,12 @@ prompt = ChatPromptTemplate.from_messages(
 
 tools = [search_tool, wiki_tool, save_tool]
 agent = create_tool_calling_agent(
-  llm=llmOpenAI,
+  llm=llmOpenAI, # swap to llmAnthropic if desired
   prompt=prompt,
   tools=tools
 )
 
-agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=False)
 query = input("What can I help you research? ")
 raw_response = agent_executor.invoke({"query": query})
 
